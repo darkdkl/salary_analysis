@@ -25,6 +25,7 @@ def get_predict_rub_salary_sj(lang):
 
     salars={}
     vacancies_info = {}
+    
     response=requests.get(url,headers=headers,params=params)
     # print(response.text)
     # print(response.json()['objects'][1]['catalogues'][0]['positions'][0]['id'])
@@ -34,18 +35,18 @@ def get_predict_rub_salary_sj(lang):
         salary_from=response.json()['objects'][num_vac]['payment_from']
         salary_to=response.json()['objects'][num_vac]['payment_to']
         salars[salary_from]=salary_to
-        salary_info = predict_rub_salary(
+
+    salary_info = predict_rub_salary(
             salars)
     
-
-
+    
 
     vacancies_info[lang] = {
 
-        'vacancies_found': response.json()['total'],
-        'vacancies_processed':'',
-        'average_salary': len(response.json()['objects'])
+        'vacancies_found': len(response.json()['objects']),
+        'vacancies_processed':salary_info[1],
+        'average_salary': salary_info[0]
     }
 
-    print(vacancies_info[lang])
-get_predict_rub_salary_sj('Python')
+if __name__ == "__main__":
+    get_predict_rub_salary_sj()

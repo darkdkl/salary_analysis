@@ -52,10 +52,3 @@ def search_by_hh(lang):
     return vacancies_info
 
 
-# def main():
-
-#     langs = ['Python', 'PHP', 'Java', 'JavaScript',
-#              'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
-#     for lang in langs:
-#         search_by_hh(lang)
-print(search_by_hh('Программист Python'))
