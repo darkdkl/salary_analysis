@@ -1,54 +1,26 @@
 import requests
-from itertools import count
-from average_salary import predict_rub_salary
 
 
+def searh_vacansy():
 
+    langs = ['Python', 'PHP', 'Java', 'JavaScript',
+             'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
 
+    number_of_vacancies={}
+    for lang in langs:
 
-def search_by_hh(lang):
+        params={
+            "text":f"программист{lang}",
+            "area":'1',
+            "date_from":"2019-09-01",
+            "date_to":"2019-10-01"
+                }
 
-    vacancies_info = {}
-    salars={}
-    number_of_vac=0
+        response=requests.get('https://api.hh.ru/vacancies',params=params)
+        number_of_vacancies[lang]=response.json()["found"]
 
-    for page in count():
-        params = {'text': f'программист {lang}', 'area': 1,
-                  'period': 30, 'only_with_salary': 'True', 'currency': 'RUR',
-                  'page': page
-
-                  }
-        page_data = requests.get('https://api.hh.ru/vacancies', params=params)
-
-        # print(page_data.json()['pages'])
+    return number_of_vacancies
         
-       
-        if page >= page_data.json()['pages']:
-            break
-    
-        for num_vac in range(0, len(page_data.json()['items'])):
-            
-            if page_data.json()['items'][num_vac]['salary']['currency'] != 'RUR':
-                break
-                       
-
-            salary_from=page_data.json()['items'][num_vac]['salary']['from']
-            salary_to=page_data.json()['items'][num_vac]['salary']['to']
- 
-            salars[salary_from]=salary_to
-            
-            
-    salary_info = predict_rub_salary(
-            salars)
-            
-    
-    vacancies_info[lang] = {
-
-        'vacancies_found': page_data.json()['found'],
-        'vacancies_processed': salary_info[1],
-        'average_salary': salary_info[0],
-    }
-
-    return vacancies_info
 
 
+print(searh_vacansy())
