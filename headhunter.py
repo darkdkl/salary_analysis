@@ -1,7 +1,7 @@
 import requests
 from itertools import count
 
-def get_response(vacancy):
+def get_response_hh(vacancy):
     
     full_data_in_pages={}
     items=[]
@@ -35,54 +35,52 @@ def get_response(vacancy):
     return full_data_in_pages
 
 
-def predict_rub_salary(vacancy):
+def predict_rub_salary_hh(vacancy):
     
 
-    response=get_response(vacancy)
+    response=get_response_hh(vacancy)
+    
     rub_salary=[]
-    for vacancy in response['items']:
-        
-        if vacancy['salary'] and vacancy['salary']['currency'] =='RUR':
-            
-            if vacancy['salary']['from'] is None:
-                
-                rub_salary.append(int(vacancy['salary']['to'])*0.8 )
 
-            elif vacancy['salary']['to']  is None:
-                
-                rub_salary.append(int(vacancy['salary']['from'])*1.2 )
-            else:
-                rub_salary.append ((int(vacancy['salary']['to']) +  int(vacancy['salary']['from']))/2 )
-        
+    if response['items']:
+        for vacancy in response['items']:
             
-    return (int(sum(rub_salary)/len(rub_salary)),len(rub_salary),response["found"])
+            if vacancy['salary'] and vacancy['salary']['currency'] =='RUR':
+                
+                if vacancy['salary']['from'] is None:
+                    
+                    rub_salary.append(int(vacancy['salary']['to'])*0.8 )
+
+                elif vacancy['salary']['to']  is None:
+                    
+                    rub_salary.append(int(vacancy['salary']['from'])*1.2 )
+                else:
+                    rub_salary.append ((int(vacancy['salary']['to']) +  int(vacancy['salary']['from']))/2 )
+            
+                
+        return (int(sum(rub_salary)/len(rub_salary)),len(rub_salary),response["found"])
     
+    else:
+        return 0,0,0
         
 
 
-def get_statistics(vacancies):
+def get_statistics_hh(vacancies):
     
     statistics={}
     for vacancy in vacancies:
-        average_salary,vacancies_processed,vacancies_found =predict_rub_salary(vacancy)
+        average_salary,vacancies_processed,vacancies_found =predict_rub_salary_hh(vacancy)
         statistics[vacancy]={
-                        "vacancies_found": vacancies_found,
-                        "vacancies_processed":vacancies_processed,
-                         "average_salary":average_salary,
+                            "vacancies_found": vacancies_found,
+                            "vacancies_processed":vacancies_processed,
+                            "average_salary":average_salary,
 
                             }
     return statistics
 
 
-
-
-
 if __name__ == "__main__":
-    langs = ['Python', 'PHP', 'Java', 'JavaScript',
-             'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
-
-    print(get_statistics(langs))
-   
+    print(get_statistics_hh('Python'))   
 
 
 
