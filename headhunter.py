@@ -75,12 +75,14 @@ def get_statistics(vacancies):
 
 
 
-langs = ['Python', 'PHP', 'Java', 'JavaScript',
+
+
+if __name__ == "__main__":
+    langs = ['Python', 'PHP', 'Java', 'JavaScript',
              'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
 
+    print(get_statistics(langs))
+   
 
 
-a=get_statistics(langs)
-
-print(a)
 
