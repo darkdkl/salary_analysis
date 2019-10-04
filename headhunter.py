@@ -10,8 +10,6 @@ def get_response_hh(vacancy):
         params={
                 "text":f"программист {vacancy}",
                 "area":'1',
-                "date_from":"2019-09-01",
-                "date_to":"2019-10-01",
                 "currency":"RUR",
                 "page":page
 

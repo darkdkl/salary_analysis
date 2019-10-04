@@ -13,8 +13,6 @@ def get_response_sj(vacancy):
                 'catalogues[]': 48,
                 'town':'Москва',
                 'currency':'rub',
-                "date_published_from":"1567555200",
-                "date_published_to":"1570147200",
                 "count":100,
                 "page":page
                 
