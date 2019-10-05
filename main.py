@@ -2,8 +2,10 @@
 from __future__ import print_function
 
 from terminaltables import AsciiTable, DoubleTable, SingleTable
+from dotenv import load_dotenv
 from superjob import get_statistics_sj
 from headhunter import get_statistics_hh
+
 
 def make_table(job_search_sites_name,statistics_data):
     
@@ -13,22 +15,23 @@ def make_table(job_search_sites_name,statistics_data):
                         'Вакансий найдено ',
                         'Вакансий обработано',
                         'Средняя зарплата'])
+    try:
+        for prog_lang in statistics_data.items():
+            table_data.append([prog_lang[0],
+                            prog_lang[1]['vacancies_found'],
+                            prog_lang[1]['vacancies_processed'],
+                            prog_lang[1]['average_salary']])
+        
+        
+        table = AsciiTable(table_data,title)
+        print (table.table)
 
-    for prog_lang in statistics_data.items():
-        table_data.append([prog_lang[0],
-                           prog_lang[1]['vacancies_found'],
-                           prog_lang[1]['vacancies_processed'],
-                           prog_lang[1]['average_salary']])
-       
-      
-    table = AsciiTable(table_data,title)
-    print (table.table)
-
-
+    except AttributeError as error:
+        print(statistics_data,', Ошибка:',error)
 
 
 def main():
-
+    load_dotenv()
 
     langs = ['Python', 'PHP', 'Java', 'JavaScript',
              'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
