@@ -1,6 +1,3 @@
-
-from __future__ import print_function
-
 from terminaltables import AsciiTable, DoubleTable, SingleTable
 from dotenv import load_dotenv
 from superjob import get_statistics_sj
@@ -24,11 +21,15 @@ def make_table(job_search_sites_name,statistics_data):
         
         
         table = AsciiTable(table_data,title)
-        print (table.table)
+        print_tables(table)
 
     except AttributeError as error:
         print(statistics_data,', Ошибка:',error)
 
+        
+
+def print_tables(table):
+    print (table.table)
 
 def main():
     load_dotenv()
