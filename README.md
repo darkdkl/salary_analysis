@@ -20,7 +20,7 @@ https://api.superjob.ru/register
 
 В каталоге с приложением необходимо создать файл .env с содержимым:
 
-`X_Api_App_Id=Secret key вашего приложения`
+`X_API_APP_ID=Secret key вашего приложения`
 
 
 

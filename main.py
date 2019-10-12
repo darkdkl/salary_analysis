@@ -4,42 +4,42 @@ from superjob import get_statistics_sj
 from headhunter import get_statistics_hh
 
 
-def make_table(job_search_sites_name,statistics_data):
-    
-    title=f'{job_search_sites_name}Moskow'
-    table_data=[ ]
+def make_table(job_search_sites_name, statistics_data):
+
+    title = f'{job_search_sites_name}Moskow'
+    table_data = []
     table_data.append(['Язык программирования',
-                        'Вакансий найдено ',
-                        'Вакансий обработано',
-                        'Средняя зарплата'])
-    try:
-        for prog_lang in statistics_data.items():
-            table_data.append([prog_lang[0],
+                       'Вакансий найдено ',
+                       'Вакансий обработано',
+                       'Средняя зарплата'])
+    # try:
+    for prog_lang in statistics_data.items():
+        table_data.append([prog_lang[0],
                             prog_lang[1]['vacancies_found'],
                             prog_lang[1]['vacancies_processed'],
                             prog_lang[1]['average_salary']])
-        
-        
-        table = AsciiTable(table_data,title)
-        print_tables(table)
 
-    except AttributeError as error:
-        print(statistics_data,', Ошибка:',error)
+    table = AsciiTable(table_data, title)
+    print_tables(table)
 
-        
+    # except AttributeError as error:
+    #     print(statistics_data, ', Ошибка:', error)
+
 
 def print_tables(table):
-    print (table.table)
+    print(table.table)
+
 
 def main():
     load_dotenv()
 
-    langs = ['Python', 'PHP', 'Java', 'JavaScript',
-             'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
+    # langs = ['Python', 'PHP', 'Java', 'JavaScript',
+    #          'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
+    langs = 'Ruby'
 
-    make_table('SuperJob ',get_statistics_sj(langs))
-    make_table('HeadHunter',get_statistics_hh(langs))
-    
+    make_table('SuperJob ', get_statistics_sj(langs))
+    # make_table('HeadHunter', get_statistics_hh(langs))
+
 
 if __name__ == '__main__':
     main()
