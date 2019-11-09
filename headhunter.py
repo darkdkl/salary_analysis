@@ -33,35 +33,16 @@ def get_response_hh(programming_language):
     return full_data_in_pages
 
 
-def predict_rub_salary_hh(vacancy):
-
-    response = get_response_hh(vacancy)
-
-    salary = []
-
-    if response['items']:
-        for vacancy in response['items']:
-            if vacancy['salary'] and vacancy['salary']['currency'] == 'RUR':
-                salary.append((int(vacancy['salary']['from'] or 0), int(
-                    vacancy['salary']['to'] or 0)))
-
-        return predict_salary(salary, response["found"])
-
-    else:
-        return 0, 0, 0
-
-
-def get_statistics_hh(vacancies):
-    if isinstance(vacancies,list):
+def get_statistics_hh(programming_languages):
+    if isinstance(programming_languages, list):
         statistics = {}
-        for vacancy in vacancies:
-            average_salary, vacancies_processed, vacancies_found = predict_rub_salary_hh(
-                vacancy)
-            statistics[vacancy] = {
+        for programming_language in programming_languages:
+            average_salary, vacancies_processed, vacancies_found = predict_salary(
+                get_response_hh(programming_language), 'headhunter')
+            statistics[programming_language] = {
                 "vacancies_found": vacancies_found,
                 "vacancies_processed": vacancies_processed,
                 "average_salary": average_salary,
-
             }
         return statistics
     else:

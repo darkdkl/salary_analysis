@@ -12,18 +12,15 @@ def make_table(job_search_sites_name, statistics_data):
                        'Вакансий найдено ',
                        'Вакансий обработано',
                        'Средняя зарплата'])
-    # try:
+
     for prog_lang in statistics_data.items():
         table_data.append([prog_lang[0],
-                            prog_lang[1]['vacancies_found'],
-                            prog_lang[1]['vacancies_processed'],
-                            prog_lang[1]['average_salary']])
+                           prog_lang[1]['vacancies_found'],
+                           prog_lang[1]['vacancies_processed'],
+                           prog_lang[1]['average_salary']])
 
     table = AsciiTable(table_data, title)
     print_tables(table)
-
-    # except AttributeError as error:
-    #     print(statistics_data, ', Ошибка:', error)
 
 
 def print_tables(table):
@@ -33,12 +30,11 @@ def print_tables(table):
 def main():
     load_dotenv()
 
-    # langs = ['Python', 'PHP', 'Java', 'JavaScript',
-    #          'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
-    langs = 'Ruby'
+    langs = ['Python', 'PHP', 'Java', 'JavaScript',
+             'Ruby', 'C++', 'Objective-C', 'Swift', 'Go', 'C#']
 
     make_table('SuperJob ', get_statistics_sj(langs))
-    # make_table('HeadHunter', get_statistics_hh(langs))
+    make_table('HeadHunter', get_statistics_hh(langs))
 
 
 if __name__ == '__main__':

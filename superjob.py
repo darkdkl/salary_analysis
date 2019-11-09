@@ -37,38 +37,21 @@ def get_response_sj(programming_language):
     return full_data_in_pages
 
 
-def predict_rub_salary_for_sj(vacancies):
-    response = get_response_sj(vacancies)
+def get_statistics_sj(programming_languages):
 
-    if response["objects"]:
-        salary = []
-        for vacancy in response["objects"]:
-
-            if vacancy["payment_from"] != 0 or vacancy["payment_to"] != 0 and vacancy["currency"] == 'rub':
-                salary.append((vacancy["payment_from"], vacancy["payment_to"]))
-
-        return predict_salary(salary, response["total"])
-
-    else:
-        return 0, 0, 0
-
-
-def get_statistics_sj(vacancies):
-        
-    if isinstance(vacancies,list):
+    if isinstance(programming_languages, list):
 
         statistics = {}
 
-        for vacancy in vacancies:
+        for programming_language in programming_languages:
 
-            average_salary, vacancies_processed, vacancies_found = predict_rub_salary_for_sj(
-                vacancy)
+            average_salary, vacancies_processed, vacancies_found = predict_salary(
+                get_response_sj(programming_language), 'superjob')
 
-            statistics[vacancy] = {
+            statistics[programming_language] = {
                 "vacancies_found": vacancies_found,
                 "vacancies_processed": vacancies_processed,
                 "average_salary": average_salary,
-
             }
         return statistics
     else:
@@ -77,4 +60,4 @@ def get_statistics_sj(vacancies):
 
 if __name__ == "__main__":
     load_dotenv()
-    print(get_statistics_sj('PHP'))
+    print(get_statistics_sj(['PHP']))
