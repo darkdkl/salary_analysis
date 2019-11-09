@@ -5,7 +5,7 @@ from predict_salary import predict_salary
 from dotenv import load_dotenv
 
 
-def get_response_sj(vacancy):
+def get_response_sj(programming_language):
 
     headers = {"X-Api-App-Id": os.getenv("X_API_APP_ID"), }
 
@@ -13,7 +13,7 @@ def get_response_sj(vacancy):
     items = []
     for page in count(0):
         params = {
-            'keyword': f"программист {vacancy}",
+            'keyword': f"программист {programming_language}",
             'catalogues[]': 48,
             'town': 'Москва',
             'currency': 'rub',

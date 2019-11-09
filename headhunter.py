@@ -3,14 +3,14 @@ from itertools import count
 from predict_salary import predict_salary
 
 
-def get_response_hh(vacancy):
+def get_response_hh(programming_language):
     max_limit_pages_hh = 99
     full_data_in_pages = {}
     items = []
     for page in count(0):
 
         params = {
-            "text": f"программист {vacancy}",
+            "text": f"программист {programming_language}",
             "area": '1',
             "currency": "RUR",
             "page": page
@@ -52,7 +52,7 @@ def predict_rub_salary_hh(vacancy):
 
 
 def get_statistics_hh(vacancies):
-    if type(vacancies) is list:
+    if isinstance(vacancies,list):
         statistics = {}
         for vacancy in vacancies:
             average_salary, vacancies_processed, vacancies_found = predict_rub_salary_hh(
